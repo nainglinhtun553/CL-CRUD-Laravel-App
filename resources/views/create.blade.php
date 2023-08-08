@@ -31,16 +31,55 @@
              <!-- for update success message function -->
 
 
+            <!-- error message for validation rule -->
+          
+            <!-- original form from laravel doc -->
+
+           <!--  @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error) 
+                        <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif -->
+
+
+            <!-- original form from laravel doc -->
+
+            <!-- error message for validation rule -->
+
+
+
  				<form action="{{ route('post#create') }}" method="post">
                     @csrf
  					<div class="text-group mb-3">
  						<label for="">Post Title</label>
- 					      <input type="text" name="postTitle" id="" class="form-control" placeholder="Enter Post Title..." required>
+ 					      <input type="text" name="postTitle" id="" class="form-control @error('postTitle') is-invalid  @enderror" value="{{old('postTitle')}}" placeholder="Enter Post Title...">
+                         <!-- show error message for post title -->
+                          @error('postTitle')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                        </div>
+                          @enderror
+                          <!-- show error message for post title -->
  					</div>
 
  					<div class="text-group mb-3">
  						<label for="">Post Description</label>
- 					      <textarea name="postDescription" class="form-control" id="" cols="30" rows="10" placeholder="Enter Post Description..." required></textarea>
+ 					      <textarea name="postDescription" class="form-control @error('postDescription') is-invalid  @enderror" id="" cols="30" rows="10" placeholder="Enter Post Description...">
+                                {{old('postDescription')}}              
+                          </textarea>
+
+
+                          <!-- show error message for post Description -->
+                          @error('postDescription')
+                            <div class="invalid-feedback">
+                              {{ $message }} 
+                        </div>
+                          @enderror
+                          <!-- show error message for post Description -->
  					</div>
 
  					<div class="mb-3">

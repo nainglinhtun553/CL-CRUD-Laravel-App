@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\validator;
 
 class PostController extends Controller
 {
@@ -25,6 +26,35 @@ class PostController extends Controller
     //post create
     public function postCreate(Request $request){
            
+        // validation rule creation
+        validator::make($request->all(),[
+
+            // posttitle name from create.blade.php
+            // search Available Validation Rules in laravel doc.
+            'postTitle'=>'required|min:5|unique:posts,title',
+            // postdescription name from create.blade.php
+            'postDescription'=>'required||min:5'
+
+        ])->validate();
+
+
+          //second way old
+
+        //      $validator = Validator::make($request->all(), [
+        //     'postTitle' => 'required',
+        //     'postDescription' => 'required',
+        // ]);
+ 
+        // if ($validator->fails()) {
+        //     return back()
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
+
+
+
+        // validation rule creation
+
            $data= $this->getPostData($request);
            //create data into database
             Post::create($data);
@@ -39,6 +69,10 @@ class PostController extends Controller
             // return redirect('testing');// url
            // return redirect()->route('test');// name
     }
+
+
+
+
 
     // for post delete route 
     public function postDelete($id){
