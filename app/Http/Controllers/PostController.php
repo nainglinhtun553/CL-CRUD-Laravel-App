@@ -12,9 +12,11 @@ class PostController extends Controller
         // take all data from database.
         // to array mean change to array format.
         // you can write all() or get().
-        $posts=Post::orderBy('created_at','desc')->get()->toArray();
+        $posts=Post::orderBy('created_at','desc')->paginate(5);
+
         //output with dd view
         // dd($posts[0]['title']);
+        // dd($posts['total']);
         // dd($posts);
         return view('create',compact('posts'));
     }
@@ -27,7 +29,9 @@ class PostController extends Controller
            //create data into database
             Post::create($data);
 
-            return redirect()->route('post#createPage');
+           
+
+            return redirect()->route('post#createPage')->with(['insertSuccess'=>'Post ဖန်တီးခြင်းအောင်မြင်ပါသည်']);
 
             // redirect the createpage
             // return view('create');
@@ -90,7 +94,7 @@ class PostController extends Controller
 
         Post::where('id',$id)->update($updateData);
         // redirect page after update function.
-        return redirect()->route('post#home');
+        return redirect()->route('post#home')->with(['updateSuccess'=>'update လုပ်ခြင်းအောင်မြင်ပါသည်']);
 
     }
 
