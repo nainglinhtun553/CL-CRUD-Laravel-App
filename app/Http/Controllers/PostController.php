@@ -27,15 +27,15 @@ class PostController extends Controller
     public function postCreate(Request $request){
            
         // validation rule creation
-        validator::make($request->all(),[
+        // validator::make($request->all(),[
 
-            // posttitle name from create.blade.php
-            // search Available Validation Rules in laravel doc.
-            'postTitle'=>'required|min:5|unique:posts,title',
-            // postdescription name from create.blade.php
-            'postDescription'=>'required||min:5'
+        //     // posttitle name from create.blade.php
+        //     // search Available Validation Rules in laravel doc.
+        //     'postTitle'=>'required|min:5|unique:posts,title',
+        //     // postdescription name from create.blade.php
+        //     'postDescription'=>'required||min:5'
 
-        ])->validate();
+        // ])->validate();
 
 
           //second way old
@@ -50,6 +50,12 @@ class PostController extends Controller
         //                 ->withErrors($validator)
         //                 ->withInput();
         // }
+
+
+
+
+
+        $this->postValidationCheck($request);
 
 
 
@@ -116,6 +122,10 @@ class PostController extends Controller
 
         // update post
     public function update(Request $request){
+        //validation rule when update data from user.
+        $this->postValidationCheck($request);
+
+        
         //call a function from get update data function
         // dd($request->all());
         $updateData = $this->getPostData($request);
@@ -160,6 +170,26 @@ class PostController extends Controller
             ];
 
          }
+
+         
+    //postvalidationcheck
+     private function postValidationCheck($request){
+             // custom messages creation 
+        $validationRules=[
+            'postTitle'=>'required|min:5|unique:posts,title',
+            // postdescription name from create.blade.php
+            'postDescription'=>'required||min:5'
+        ];
+        $validationMessage=[
+            'postTitle.required'=>'Post Title ဖြည့်ရန် လိုအပ်ပါသည်။',
+            'postTitle.min'=>'အနည်းဆုံး ၅လုံးအထက် ရှိရမည်။',
+            'postTitle.unique'=>'ခေါင်းစဥ်တူနေပါသည်,ထပ်မံရိုက်ကြည့်ပါ။',
+            'postDescription.required'=>'Post Description ဖြည့်ရန် လိုအပ်ပါသည်။'
+        ];
+
+        validator::make($request->all(),$validationRules,$validationMessage)->validate();
+        // custom messages creation 
+     }
 
 
 }
