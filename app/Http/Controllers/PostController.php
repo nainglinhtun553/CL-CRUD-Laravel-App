@@ -14,6 +14,8 @@ class PostController extends Controller
         // to array mean change to array format.
         // you can write all() or get().
         $posts=Post::orderBy('created_at','desc')->paginate(5);
+        // $posts=Post::orderBy('created_at','desc')->get();
+        
 
         //output with dd view
         // dd($posts[0]['title']);
@@ -55,7 +57,7 @@ class PostController extends Controller
 
 
 
-        $this->postValidationCheck($request);
+        $this->postValidationCheck($request,"create");
 
 
 
@@ -99,9 +101,11 @@ class PostController extends Controller
 
     // for direct update post
     public function updatePage($id){
+
+
         // search the data with id number.
         // first way
-        $post= Post::where('id',$id)->get()->toArray();
+        $post= Post::where('id',$id)->get();
         // $post= Post::where('id',$id)->first()->toArray();
         // dd($post);
 
@@ -122,8 +126,10 @@ class PostController extends Controller
 
         // update post
     public function update(Request $request){
+
+          // custom messages creation
         //validation rule when update data from user.
-        $this->postValidationCheck($request);
+        $this->postValidationCheck($request,"update");
 
         
         //call a function from get update data function
@@ -173,13 +179,25 @@ class PostController extends Controller
 
          
     //postvalidationcheck
-     private function postValidationCheck($request){
-             // custom messages creation 
-        $validationRules=[
+     private function postValidationCheck($request,$status){
+        
+
+        if ($status == "create"){
+            $validationRules=[
             'postTitle'=>'required|min:5|unique:posts,title',
             // postdescription name from create.blade.php
             'postDescription'=>'required||min:5'
         ];
+    }else{
+        $validationRules=[
+            'postTitle'=>'required|min:5|unique:posts,title,'.$request->postId,
+            // postdescription name from create.blade.php
+            'postDescription'=>'required||min:5'
+        ];
+    }
+
+             // custom messages creation 
+        
         $validationMessage=[
             'postTitle.required'=>'Post Title ဖြည့်ရန် လိုအပ်ပါသည်။',
             'postTitle.min'=>'အနည်းဆုံး ၅လုံးအထက် ရှိရမည်။',
@@ -192,5 +210,4 @@ class PostController extends Controller
      }
 
 
-}
-;
+};

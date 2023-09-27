@@ -15,6 +15,7 @@
 				<p class="text-muted">
 					{{ $post[0]['description'] }}
 				</p>
+				{{$post[0]->created_at->format("j-F-Y")}}
 			</div>
 		</div>
 

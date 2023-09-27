@@ -100,7 +100,8 @@
                @foreach($posts as $item)
                 <div class="post p-3 shadow-sm mb-4">
                     <div class="row">
-                        <h5 class="col-7">{{$item->title}}</h5> &nbsp;
+                        <h5 class="col-7">{{$item->title}}</h5> 
+                        <h5 class="col-4 offset-1">{{ $item->created_at->format("j-F-Y ") }}</h5>
 
                         <div class="col">
                             <!-- <span class="text-secondary">{{ $item['created_at'] }}</span> -->
@@ -121,6 +122,21 @@
                         <!-- laravel wrting rule  -->
                          {{ Str::words($item->description,25,'.......')}}
                     </p>
+
+                    <span>
+                       <small> <i class="fa-solid fa-money-bill-1 text-primary"></i>{{$item->price}} Kyats</small>
+                    </span>|
+
+                    <span>
+                        <i class="fa-solid fa-location-dot text-danger"></i>{{$item->address}}
+                    </span>|
+
+                    <span>
+                        {{$item->rating}}<i class="fa-solid fa-star text-warning"></i>
+                    </span>
+
+
+
                     <div class="text-end"> 
                         <!-- first way -->
                         <!-- $item->id is a format of object -->
