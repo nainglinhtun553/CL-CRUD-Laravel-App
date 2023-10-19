@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\validator;
 
 class PostController extends Controller
@@ -13,14 +14,103 @@ class PostController extends Controller
         // take all data from database.
         // to array mean change to array format.
         // you can write all() or get().
-        $posts=Post::orderBy('created_at','desc')->paginate(5);
+        // $posts=Post::orderBy('created_at','desc')->paginate(5);
+        // $posts=Post::get();
+        // $posts=Post::first();
+         // $posts=Post::get()->last();
+        // dd($posts->toArray());
+        // catch with collection ($posts->title)| catch with array ($posts['title'])
         // $posts=Post::orderBy('created_at','desc')->get();
-        
+
+        // $posts=Post::pluck('title');
+        // $posts=Post::select("title","price")->get();
+        // $posts=Post::select("title","rating")->get();
+        // dd($posts->toArray());
+        // dd($posts->toArray());
+
+        // $posts=Post::get()->pluck('title');
+        // dd($posts);
+
+        // address ကို sagaing ဖြစ်တဲ့ပာာကို ramdom ပြပေးပါဆို အောက်ပါအတိုင်း ရေးရသည်။ 
+        // $posts=Post::where('address','sagaing')->get()->random();
+
+        // နှစ်ခုစလုံးရမှ data ရမည်ဆိုရင် where 
+        // နှစ်ခုထဲက တစ်ခု ဆိုရင် orWhere ကို သုံးရသည်။ 
+        // $posts=Post::where('id','<',20)->where('address','sagaing')->get();
+        // $posts=Post::orWhere('id','<',20)->orWhere('address','sagaing')->get();
+          // $posts=Post::orderBy('id','asc')->get();
+        // $posts=Post::orderBy('price','desc')->get();
+        // between price 
+        // $posts=Post::whereBetween('price',[3000,9000])->orderBy('price','asc')->get();
+        // $posts=Post::select('id','title','address','price')->where('address','sagaing')->whereBetween('price',[3000,9000])->orderBy('price','asc')->get();
+
+        // $posts=Post::where('address','sagaing')->dd();
+        // $posts=Post::select('address',DB::raw('COUNT(address) as count_address'))->groupBy('address')->get();
+
+
+        // dd($posts->toArray());
+        // dd($posts[0]);
+
+
+
+        // database မှာ title description ကို စကားလုံး အကြီးတွေ ပြောင်းချင်ရင် အောက်ပါအတိုင်း ရေးသည်။ 
+        // $post =Post::get()->map(function($post){
+        //     $post->title= strtoupper($post->title);
+        //     $post->description=strtoupper($post->description);
+        // return $post;
+             
+        // });
+        // dd($post->toArray());
+
+
+        // each using
+        // $post =Post::get()->each(function($post){
+        //     $post->title= strtoupper($post->title);
+        //     $post->description=strtoupper($post->description);
+        //     $post->price= $post->price * 2;
+        //     return $post;
+            
+        // });
+        // dd($post->toArray());
+
+
+        // $post =Post::paginate(5)->through(function($post){
+        //     $post->title= strtoupper($post->title);
+        //     $post->description=strtoupper($post->description);
+        //     $post->price= $post->price * 2;
+        //     return $post;
+            
+        // });
+        // dd($post->toArray());
+
+
 
         //output with dd view
         // dd($posts[0]['title']);
         // dd($posts['total']);
         // dd($posts);
+
+
+
+        // data searching into database from url 
+        //http://localhost:8000/customer/createPage?key="code lab"
+        // $searchKey=$_REQUEST['key'];
+        // $post = Post::where('title',$searchKey)->get()->toArray();
+
+
+        // $post = Post::where('title','like','%'.$searchKey.'%')->get()->toArray();
+        $post= Post::when(request('key'),function($p){
+            $searchKey=$_REQUEST['key'];
+            // check condition
+            $p->where('title','like','%'.$searchKey.'%');
+
+
+        })->get();
+        dd($post->toArray());
+
+
+
+        
         return view('create',compact('posts'));
     }
 
