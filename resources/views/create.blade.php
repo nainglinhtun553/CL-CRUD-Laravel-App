@@ -81,6 +81,69 @@
                           @enderror
                           <!-- show error message for post Description -->
  					</div>
+                    <!-- image-storage -->
+
+                    <!-- <div class="text-group mb-3"> -->
+ 						<!-- <label for="">Image</label>
+                         <input type="file" name="postImage" id="" class="form-control @error('postImage') is-invalid  @enderror" value="{{old('postImage')}}">					 -->
+                          <!-- show error message for post Description -->
+                          <!-- @error('postImage')
+                            <div class="invalid-feedback">
+                              {{ $message }} 
+                        </div>
+                          @enderror -->
+                          <!-- show error message for post Description -->
+                         
+                    <!-- </div>  -->
+
+
+                    <div class="text-group mb-3">
+ 						<label for="">Fee</label>
+                         <input type="number" name="postFee" id="" class="form-control @error('postFee') is-invalid @enderror" value="{{old('postFee')}}" placeholder="Enter Post Fee...">					
+
+                         <!-- show error message for post Description -->
+                         @error('postFee')
+                            <div class="invalid-feedback">
+                              {{ $message }} 
+                        </div>
+                          @enderror
+                          <!-- show error message for post Description -->
+                    </div>
+
+
+                    <div class="text-group mb-3">
+ 						<label for="">Address</label>
+                         <input type="text" name="postAddress" id="" class="form-control @error('postAddress') is-invalid @enderror" value="{{old('postAddress')}}" placeholder="Enter Post Address...">					
+                          <!-- show error message for post Description -->
+                          @error('postAddress')
+                            <div class="invalid-feedback">
+                              {{ $message }} 
+                        </div>
+                          @enderror
+                          <!-- show error message for post Description -->
+
+                         
+                    </div>
+
+
+                      <div class="text-group mb-3">
+ 						<label for="">Rating</label>
+                         <input type="number" name="postRating" min="0" max="5" id="" class="form-control @error('postRating') is-invalid @enderror" value="{{old('postRating')}}" >					
+                         <!-- show error message for post Description -->
+                         @error('postRating')
+                            <div class="invalid-feedback">
+                              {{ $message }} 
+                        </div>
+                          @enderror
+                          <!-- show error message for post Description -->
+                    </div>
+                    
+
+                     <!-- image-storage -->
+
+
+
+
 
  					<div class="mb-3">
  						<input type="submit" value="Create" class="btn btn-danger">
@@ -88,15 +151,35 @@
 				</form>
  			</div>
  		</div>
+
+
+
  		<div class="col-7">
 
             <h3 class="mb-3">
-                Total-{{$posts->total()}}
+                <div class="row">
+                    <div class="col-5"> Total-{{$posts->total()}}</div>
+                    <div class="col-6 offset-1">
+                        
+                              <form action="{{route('post#createPage')}}" method="get">
+                                    <div class="row">
+                                            <input type="text" name="searchKey" value="{{request('searchKey')}}"  class="form-control col" placeholder="Enter Search Key....">
+                                            &nbsp;<button class="btn btn-danger col-2" type="submit">
+                                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                                </button>
+                                    </div>
+                              </form>
+                       
+                    </div>
+
+                    
+                </div>
             </h3>
 
 
  			<div class="data-container">
                <!-- for posts components  -->
+               @if(count($posts) !=0) 
                @foreach($posts as $item)
                 <div class="post p-3 shadow-sm mb-4">
                     <div class="row">
@@ -159,10 +242,13 @@
                     </div>
                 </div>
 
-               @endforeach 
+               @endforeach
+               @else
+               <h3 class="text-danger text-center mt-5">There is no data....</h3>
+               @endif
             </div>
 
-            {{$posts->links()}}
+            {{$posts->appends(request()->query())->links()}}
 
  		</div>
  	</div>

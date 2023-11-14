@@ -14,7 +14,7 @@ class PostController extends Controller
         // take all data from database.
         // to array mean change to array format.
         // you can write all() or get().
-        // $posts=Post::orderBy('created_at','desc')->paginate(5);
+       
         // $posts=Post::get();
         // $posts=Post::first();
          // $posts=Post::get()->last();
@@ -99,20 +99,34 @@ class PostController extends Controller
 
 
         // $post = Post::where('title','like','%'.$searchKey.'%')->get()->toArray();
-        $post= Post::when(request('key'),function($p){
-            $searchKey=$_REQUEST['key'];
-            // check condition
-            $p->where('title','like','%'.$searchKey.'%');
 
-
-        })->get();
-        dd($post->toArray());
-
-
-
+        // search key ပါမပါ စစ်  ပါခဲ့ရင် filter လုပ် မပါခဲ့ရင် အကုန်ချပြ
+        // $post= Post::when(request('key'),function($p){
+        //     $searchKey=$_REQUEST['key'];
+        //     // check condition
+        //     $p->where('title','like','%'.$searchKey.'%');
+        // })->get();
+        // dd($post->toArray());
+        // Post::where('title','like','%'.$searchKey.'%')->get();
         
+        
+        // http://127.0.0.1:8000/?page=2
+        
+        
+
+        // $posts=Post::orderBy('created_at','desc')->paginate(3);
+
+
+        // data searching
+     $posts =Post::when(request('searchKey'),function($query){
+            $key =request('searchKey');
+            $query->orWhere('title','like','%'.$key.'%')
+            ->orWhere('description','like','%'.$key.'%');
+        })->orderBy('created_at','desc')->paginate(4);
         return view('create',compact('posts'));
     }
+
+    
 
 
     //post create
@@ -257,15 +271,17 @@ class PostController extends Controller
         //         'description'=>$request->postDescription
         //     ];
         //     return $response;
-
-
         return [
                 'title' =>$request->postTitle,
-                'description'=>$request->postDescription
+                'description'=>$request->postDescription,
+                'price'=>$request->postFee,
+                'address'=>$request->postAddress,
+                'rating'=>$request->postRating
                 
             ];
-
          }
+
+
 
          
     //postvalidationcheck
@@ -276,13 +292,22 @@ class PostController extends Controller
             $validationRules=[
             'postTitle'=>'required|min:5|unique:posts,title',
             // postdescription name from create.blade.php
-            'postDescription'=>'required||min:5'
+            'postDescription'=>'required||min:5',
+            // 'postImage'=>'required',
+            'postFee'=>'required',
+            'postAddress'=>'required',
+            'postRating'=>'required'
+            
         ];
     }else{
         $validationRules=[
             'postTitle'=>'required|min:5|unique:posts,title,'.$request->postId,
             // postdescription name from create.blade.php
-            'postDescription'=>'required||min:5'
+            'postDescription'=>'required||min:5',
+            // 'postImage'=>'required',
+            'postFee'=>'required',
+            'postAddress'=>'required',
+            'postRating'=>'required'
         ];
     }
 
@@ -292,7 +317,11 @@ class PostController extends Controller
             'postTitle.required'=>'Post Title ဖြည့်ရန် လိုအပ်ပါသည်။',
             'postTitle.min'=>'အနည်းဆုံး ၅လုံးအထက် ရှိရမည်။',
             'postTitle.unique'=>'ခေါင်းစဥ်တူနေပါသည်,ထပ်မံရိုက်ကြည့်ပါ။',
-            'postDescription.required'=>'Post Description ဖြည့်ရန် လိုအပ်ပါသည်။'
+            'postDescription.required'=>'Post Description ဖြည့်ရန် လိုအပ်ပါသည်။',
+            // 'postImage.required'=>'Post Image ထည့်ရန် လိုအပ်ပါသည်။',
+            'postFee.required'=>'Post Fee ဖြည့်ရန် လိုအပ်ပါသည်။',
+            'postAddress.required'=>'Post Address ဖြည့်ရန် လိုအပ်ပါသည်။',
+            'postRating.required'=>'Post Rating ဖြည့်ရန် လိုအပ်ပါသည်။'
         ];
 
         validator::make($request->all(),$validationRules,$validationMessage)->validate();
