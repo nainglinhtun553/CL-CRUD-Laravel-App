@@ -42,8 +42,7 @@
                           @enderror
                           <!-- show error message for post Description -->
 
-
-
+						  
 
 					<input type="submit" value="Update" class="btn bg-dark text-white my-3 float-end">
 				</form>

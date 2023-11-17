@@ -131,6 +131,52 @@ class PostController extends Controller
 
     //post create
     public function postCreate(Request $request){
+        // dd($request->all());
+
+        // file ပါမပါ temary operator ကိုသုံးပြီး စစ်ကြည့်မည်။ 
+        // dd($request->hasFile('postImage')?'yes':'no');
+
+        // image ကို အောက်ပါအတိုင်း ဖမ်းကြည့်မည်။
+        // dd($request->file('postImage'));
+        // another way the catch the image.
+         // dd($request->postImage);
+
+        // to find the image path.
+        // dd($request->postImage->path());
+
+        // to find image extension.
+        // dd($request->postImage->extension());
+
+
+
+       // to take origial name of image with extension.
+    //    dd($request->postImage->getClientOriginalName());
+
+
+        // dd($request->postTitle);
+        // dd($request->postFee);
+
+        // has or hasn't image to catch the if statement.
+        if($request->hasFile('postImage')){
+            // to save the folder of storage>app
+            // $request->file('postImage')->store('myImage');
+            // to save the image with user assign name in store>app>myImage folder.
+
+            // to assign the original file name for saving with original name.
+            $fileName=$request->file('postImage')->getClientOriginalName();
+            // write for to do the save function of images
+            $request->file('postImage')->storeAs('myImage',$fileName);
+             // to show the success step.
+            dd("store success");
+
+        }
+        dd('not have photo');
+
+        
+
+
+
+
            
         // validation rule creation
         // validator::make($request->all(),[
@@ -293,7 +339,6 @@ class PostController extends Controller
             'postTitle'=>'required|min:5|unique:posts,title',
             // postdescription name from create.blade.php
             'postDescription'=>'required||min:5',
-            // 'postImage'=>'required',
             'postFee'=>'required',
             'postAddress'=>'required',
             'postRating'=>'required'
@@ -304,7 +349,6 @@ class PostController extends Controller
             'postTitle'=>'required|min:5|unique:posts,title,'.$request->postId,
             // postdescription name from create.blade.php
             'postDescription'=>'required||min:5',
-            // 'postImage'=>'required',
             'postFee'=>'required',
             'postAddress'=>'required',
             'postRating'=>'required'
@@ -318,7 +362,6 @@ class PostController extends Controller
             'postTitle.min'=>'အနည်းဆုံး ၅လုံးအထက် ရှိရမည်။',
             'postTitle.unique'=>'ခေါင်းစဥ်တူနေပါသည်,ထပ်မံရိုက်ကြည့်ပါ။',
             'postDescription.required'=>'Post Description ဖြည့်ရန် လိုအပ်ပါသည်။',
-            // 'postImage.required'=>'Post Image ထည့်ရန် လိုအပ်ပါသည်။',
             'postFee.required'=>'Post Fee ဖြည့်ရန် လိုအပ်ပါသည်။',
             'postAddress.required'=>'Post Address ဖြည့်ရန် လိုအပ်ပါသည်။',
             'postRating.required'=>'Post Rating ဖြည့်ရန် လိုအပ်ပါသည်။'

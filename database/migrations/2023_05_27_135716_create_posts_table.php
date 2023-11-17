@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
+            $table->text('image')->nullable(true);
             $table->integer('price')->nullable(true)->default(2000);
             $table->string('address')->nullable(true)->default("sagaing");
             $table->double('rating')->nullable(true)->default(0);

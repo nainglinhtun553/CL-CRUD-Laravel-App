@@ -11,7 +11,7 @@
 					</a>				
 				</div>
 
-				<h3>{{ $post[0]['title'] }}</h3>
+				<h3> {{ $post[0]['title'] }}</h3>
 				<p class="text-muted">
 					{{ $post[0]['description'] }}
 				</p>

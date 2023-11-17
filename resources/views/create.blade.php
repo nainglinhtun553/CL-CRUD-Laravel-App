@@ -52,7 +52,7 @@
 
 
 
- 				<form action="{{ route('post#create') }}" method="post">
+ 				<form action="{{ route('post#create') }}" method="post" enctype="multipart/form-data">
                     @csrf
  					<div class="text-group mb-3">
  						<label for="">Post Title</label>
@@ -81,35 +81,28 @@
                           @enderror
                           <!-- show error message for post Description -->
  					</div>
-                    <!-- image-storage -->
-
-                    <!-- <div class="text-group mb-3"> -->
- 						<!-- <label for="">Image</label>
-                         <input type="file" name="postImage" id="" class="form-control @error('postImage') is-invalid  @enderror" value="{{old('postImage')}}">					 -->
-                          <!-- show error message for post Description -->
-                          <!-- @error('postImage')
-                            <div class="invalid-feedback">
-                              {{ $message }} 
-                        </div>
-                          @enderror -->
-                          <!-- show error message for post Description -->
+                   
+          <div class="text-group mb-3"> 
+ 					 <label for="">Image</label>
+                         <input type="file" name="postImage" id="" class="form-control" value="{{old('postImage')}}">	
+                                           
                          
-                    <!-- </div>  -->
+           </div>  
 
 
-                    <div class="text-group mb-3">
+            <div class="text-group mb-3">
  						<label for="">Fee</label>
                          <input type="number" name="postFee" id="" class="form-control @error('postFee') is-invalid @enderror" value="{{old('postFee')}}" placeholder="Enter Post Fee...">					
 
-                         <!-- show error message for post Description -->
+                         
                          @error('postFee')
                             <div class="invalid-feedback">
                               {{ $message }} 
                         </div>
                           @enderror
-                          <!-- show error message for post Description -->
+                         
                     </div>
-
+                    
 
                     <div class="text-group mb-3">
  						<label for="">Address</label>
@@ -128,7 +121,7 @@
 
                       <div class="text-group mb-3">
  						<label for="">Rating</label>
-                         <input type="number" name="postRating" min="0" max="5" id="" class="form-control @error('postRating') is-invalid @enderror" value="{{old('postRating')}}" >					
+                         <input type="number" name="postRating" min="0" max="5" id="" class="form-control @error('postRating') is-invalid @enderror" value="{{old('postRating')}}" placeholder="Enter Post Rating.....">					
                          <!-- show error message for post Description -->
                          @error('postRating')
                             <div class="invalid-feedback">
