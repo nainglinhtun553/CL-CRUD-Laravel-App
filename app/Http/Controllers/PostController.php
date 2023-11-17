@@ -161,7 +161,7 @@ class PostController extends Controller
             // to save the folder of storage>app
             // $request->file('postImage')->store('myImage');
             // to save the image with user assign name in store>app>myImage folder.
-
+            // **************************************************************************
             // to assign the original file name for saving with original name.
             $fileName=$request->file('postImage')->getClientOriginalName();
             // write for to do the save function of images
@@ -170,12 +170,7 @@ class PostController extends Controller
             dd("store success");
 
         }
-        dd('not have photo');
-
-        
-
-
-
+        dd('not have photo');  
 
            
         // validation rule creation
