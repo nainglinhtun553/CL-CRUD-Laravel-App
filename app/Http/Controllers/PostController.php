@@ -167,7 +167,7 @@ class PostController extends Controller
             // to assign the original file name for saving with original name.
             $fileName= uniqid().$request->file('postImage')->getClientOriginalName();
             // write for to do the save function of images
-            $request->file('postImage')->storeAs('myImage',$fileName);
+            $request->file('postImage')->storeAs('public',$fileName);
             $data['image']=$fileName;
              // to show the success step.
             // dd("store success");
@@ -201,19 +201,9 @@ class PostController extends Controller
         //                 ->withErrors($validator)
         //                 ->withInput();
         // }
-
-
-
-
-
-       
-
-
-       
+      
            //create data into database
-            Post::create($data);
-
-           
+            Post::create($data);          
 
             return redirect()->route('post#createPage')->with(['insertSuccess'=>'Post ဖန်တီးခြင်းအောင်မြင်ပါသည်']);
 
@@ -272,6 +262,7 @@ class PostController extends Controller
 
         // update post
     public function update(Request $request){
+            // dd($request->all());
 
           // custom messages creation
         //validation rule when update data from user.
@@ -323,45 +314,29 @@ class PostController extends Controller
             ];
          }
 
-
-
-         
+        
     //postvalidationcheck
      private function postValidationCheck($request,$status){
-        
-
-        if ($status == "create"){
-            $validationRules=[
+         $validationRules=[
             'postTitle'=>'required|min:5|unique:posts,title',
             // postdescription name from create.blade.php
             'postDescription'=>'required||min:5',
-            'postFee'=>'required',
-            'postAddress'=>'required',
-            'postRating'=>'required',
-            'postImage'=>'mimes:jpg,bmp,jpeg,png'
+            'postImage'=>'mimes:jpg,bmp,jpeg,png'            
             
-        ];
-    }else{
-        $validationRules=[
-            'postTitle'=>'required|min:5|unique:posts,title,'.$request->postId,
-            // postdescription name from create.blade.php
-            'postDescription'=>'required||min:5',
-            'postFee'=>'required',
-            'postAddress'=>'required',
-            'postRating'=>'required'
-        ];
-    }
+        ];   
 
              // custom messages creation 
         
         $validationMessage=[
             'postTitle.required'=>'Post Title ဖြည့်ရန် လိုအပ်ပါသည်။',
             'postTitle.min'=>'အနည်းဆုံး ၅လုံးအထက် ရှိရမည်။',
+            'postDescription.min'=>'အနည်းဆုံး ၅လုံးအထက် ရှိရမည်။',
             'postTitle.unique'=>'ခေါင်းစဥ်တူနေပါသည်,ထပ်မံရိုက်ကြည့်ပါ။',
             'postDescription.required'=>'Post Description ဖြည့်ရန် လိုအပ်ပါသည်။',
             'postFee.required'=>'Post Fee ဖြည့်ရန် လိုအပ်ပါသည်။',
             'postAddress.required'=>'Post Address ဖြည့်ရန် လိုအပ်ပါသည်။',
-            'postRating.required'=>'Post Rating ဖြည့်ရန် လိုအပ်ပါသည်။'
+            'postRating.required'=>'Post Rating ဖြည့်ရန် လိုအပ်ပါသည်။',
+            'postImage.mimes'=>'image သည် jpg,bmp,jpeg,png file typpe ဖြစ်ရန် လိုအပ်ပါသည်။'
         ];
 
         validator::make($request->all(),$validationRules,$validationMessage)->validate();
