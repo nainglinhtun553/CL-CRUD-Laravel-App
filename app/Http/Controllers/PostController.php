@@ -155,7 +155,9 @@ class PostController extends Controller
 
         // dd($request->postTitle);
         // dd($request->postFee);
-
+        $this->postValidationCheck($request,"create");
+         // validation rule creation
+         $data= $this->getPostData($request);
         // has or hasn't image to catch the if statement.
         if($request->hasFile('postImage')){
             // to save the folder of storage>app
@@ -163,14 +165,16 @@ class PostController extends Controller
             // to save the image with user assign name in store>app>myImage folder.
             // **************************************************************************
             // to assign the original file name for saving with original name.
-            $fileName=$request->file('postImage')->getClientOriginalName();
+            $fileName= uniqid().$request->file('postImage')->getClientOriginalName();
             // write for to do the save function of images
             $request->file('postImage')->storeAs('myImage',$fileName);
+            $data['image']=$fileName;
              // to show the success step.
-            dd("store success");
+            // dd("store success");
 
         }
-        dd('not have photo');  
+        // dd($data);
+        // dd('not have photo');  
 
            
         // validation rule creation
@@ -202,13 +206,10 @@ class PostController extends Controller
 
 
 
-        $this->postValidationCheck($request,"create");
+       
 
 
-
-        // validation rule creation
-
-           $data= $this->getPostData($request);
+       
            //create data into database
             Post::create($data);
 
@@ -336,7 +337,8 @@ class PostController extends Controller
             'postDescription'=>'required||min:5',
             'postFee'=>'required',
             'postAddress'=>'required',
-            'postRating'=>'required'
+            'postRating'=>'required',
+            'postImage'=>'mimes:jpg,bmp,jpeg,png'
             
         ];
     }else{
