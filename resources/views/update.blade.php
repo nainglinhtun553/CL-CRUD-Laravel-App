@@ -15,6 +15,10 @@
 				<p class="text-muted">
 					{{ $post[0]['description'] }}
 				</p>
+				<h3> {{ $post[0]['price'] }}</h3>
+				<h3> {{ $post[0]['address'] }}</h3>
+				<h3> {{ $post[0]['rating'] }}</h3>
+
 				{{$post[0]->created_at->format("j-F-Y")}}
 			</div>
 		</div>

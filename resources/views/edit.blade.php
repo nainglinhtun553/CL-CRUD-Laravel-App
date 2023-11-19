@@ -42,7 +42,41 @@
                           @enderror
                           <!-- show error message for post Description -->
 
+
+
+
+						  <input type="text" name="postFee"class="form-control my-3 @error('postFee') is-invalid  @enderror" value="{{old('postFee',$post['price']) }}" placeholder="Enter Post Title">
+
+						  <!-- show error message for post title -->
+							   @error('postFee')
+								 <div class="invalid-feedback mb-3">
+								   {{ $message }}
+							 </div>
+							   @enderror
+							   <!-- show error message for post title -->
 						  
+
+
+							   <input type="text" name="postAddress"class="form-control my-3 @error('postAddress') is-invalid  @enderror" value="{{old('postAddress',$post['address']) }}" placeholder="Enter Post Address">
+
+							   <!-- show error message for post title -->
+									@error('postAddress')
+									  <div class="invalid-feedback mb-3">
+										{{ $message }}
+								  </div>
+									@enderror
+									<!-- show error message for post title -->
+
+
+									<input type="text" name="postRating"class="form-control my-3 @error('postRating') is-invalid  @enderror" value="{{old('postRating',$post['rating']) }}">
+
+									<!-- show error message for post title -->
+										 @error('postAddress')
+										   <div class="invalid-feedback mb-3">
+											 {{ $message }}
+									   </div>
+										 @enderror
+										 <!-- show error message for post title -->
 
 					<input type="submit" value="Update" class="btn bg-dark text-white my-3 float-end">
 				</form>
