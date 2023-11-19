@@ -299,20 +299,17 @@ class PostController extends Controller
     // private function
     // get post data
     private function getPostData($request){
-        // $response =[
-        //         'title' =>$request->postTitle,
-        //         'description'=>$request->postDescription
-        //     ];
-        //     return $response;
-        return [
-                'title' =>$request->postTitle,
-                'description'=>$request->postDescription,
-                'price'=>$request->postFee,
-                'address'=>$request->postAddress,
-                'rating'=>$request->postRating
-                
-            ];
-         }
+        $data=[
+            'title' =>$request->postTitle,
+            'description'=>$request->postDescription,
+        ];
+        $data['price']=$request->postFee == null? 2000 : $request->postFee;
+        $data['address']=$request->postAddress == null? 'sagaing' : $request->postAddress;
+        $data['rating']=$request->postRating == null? 5 : $request->postRating;
+
+        return $data;
+             
+     }
 
         
     //postvalidationcheck
