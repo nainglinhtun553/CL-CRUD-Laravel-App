@@ -11,7 +11,7 @@
 				</div>
 
 				
-				<form action="{{route('post#update')}}" method="post" >
+				<form action="{{route('post#update')}}" method="post" enctype="multipart/form-data">
 					@csrf
 					<label>Post Title</label>
 					<input type="hidden" name="postId" value="{{$post['id']}}">  
@@ -25,8 +25,25 @@
                         </div>
                           @enderror
                           <!-- show error message for post title -->
+						<label for="">Image:</label>
+						  <div class="">
+							@if($post['image'] == null)
+							<img src="{{asset('storage/404image.png')}}" class="img-thumbnail my-2 shadow-sm" alt="">
+							@else
+							<img src="{{asset('storage/'.$post['image'])}}" class="img-thumbnail my-2 shadow-sm" alt="">
+							@endif		
+						</div>
 
+					{{-- to update image  --}}
+					<input type="file" name="postImage" id="" class="form-control @error('postImage') is-invalid @enderror" value="{{old('postImage')}}">	
+						@error('postImage')
+					<div class="invalid-feedback">
+						  {{ $message }} 
+					</div>
+					  @enderror
+					 {{-- to update image  --}}
 
+						
 
 					<label class="my-3">Post Description</label>
 					<textarea class="form-control @error('postDescription') is-invalid  @enderror " name="postDescription"cols="30" rows="10" placeholder="Enter Post Description">
@@ -43,9 +60,11 @@
                           <!-- show error message for post Description -->
 
 
+						
 
 
-						  <input type="text" name="postFee"class="form-control my-3 @error('postFee') is-invalid  @enderror" value="{{old('postFee',$post['price']) }}" placeholder="Enter Post Title">
+
+						  <input type="text" name="postFee"class="form-control my-3" value="{{old('postFee',$post['price']) }}" placeholder="Enter Post Title">
 
 						  <!-- show error message for post title -->
 							   @error('postFee')
@@ -57,7 +76,7 @@
 						  
 
 
-							   <input type="text" name="postAddress"class="form-control my-3 @error('postAddress') is-invalid  @enderror" value="{{old('postAddress',$post['address']) }}" placeholder="Enter Post Address">
+							   <input type="text" name="postAddress"class="form-control my-3" value="{{old('postAddress',$post['address']) }}" placeholder="Enter Post Address">
 
 							   <!-- show error message for post title -->
 									@error('postAddress')
@@ -68,7 +87,7 @@
 									<!-- show error message for post title -->
 
 
-									<input type="text" name="postRating"class="form-control my-3 @error('postRating') is-invalid  @enderror" value="{{old('postRating',$post['rating']) }}">
+									<input type="text" name="postRating"class="form-control my-3" value="{{old('postRating',$post['rating']) }}">
 
 									<!-- show error message for post title -->
 										 @error('postAddress')

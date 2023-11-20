@@ -11,15 +11,28 @@
 					</a>				
 				</div>
 
+				
 				<h3> {{ $post[0]['title'] }}</h3>
+				<div class="d-flex">
+					<div class="btn btn-sm bg-dark text-white me-2 my-3"><i class="fa-solid fa-money-bill-1 text-primary"></i> {{ $post[0]['price'] }} Kyats</div>
+					<div class="btn btn-sm bg-dark text-white me-2 my-3"><i class="fa-solid fa-location-dot text-danger"></i> {{ $post[0]['address'] }}</div>
+					<div class="btn btn-sm bg-dark text-white me-2 my-3"><i class="fa-solid fa-star text-warning"></i>{{ $post[0]['rating'] }}</div>
+					<div class="btn btn-sm bg-dark text-white me-2 my-3"><i class="fa-regular fa-calendar-days"></i> {{$post[0]->created_at->format("j-F-Y")}}</div>
+					<div class="btn btn-sm bg-dark text-white me-2 my-3"><i class="fa-solid fa-clock"></i> {{$post[0]->created_at->format("h:m:s:A")}}</div>
+				</div>
+				<div class="">
+							@if($post[0]['image'] == null)
+							<img src="{{asset('storage/404image.png')}}" class="img-thumbnail my-4 shadow-sm" alt="">
+							@else
+							<img src="{{asset('storage/'.$post[0]['image'])}}" class="img-thumbnail my-4 shadow-sm" alt="">
+							@endif		
+				</div>
+
 				<p class="text-muted">
 					{{ $post[0]['description'] }}
 				</p>
-				<h3> {{ $post[0]['price'] }}</h3>
-				<h3> {{ $post[0]['address'] }}</h3>
-				<h3> {{ $post[0]['rating'] }}</h3>
-
-				{{$post[0]->created_at->format("j-F-Y")}}
+				
+				
 			</div>
 		</div>
 

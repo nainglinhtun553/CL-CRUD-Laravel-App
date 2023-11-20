@@ -191,9 +191,17 @@
                         
                     </div>
 
+                    <div class="">
+                        @if($item->image == null)
+                        <img src="{{asset('storage/404image.png')}}" class="img-thumbnail my-4 shadow-sm" alt="">
+                        @else
+                        <img src="{{asset('storage/'.$item->image)}}" class="img-thumbnail my-4 shadow-sm" alt="">
+                        @endif		
+                     </div>
 
 
-                    <p class="text-muted">
+
+                        <p class="text-muted">
                         <!-- pure php writing rule -->
                         <!-- {{substr($item['description'],0,100)}} -->
                         <!-- simple text -->

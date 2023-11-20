@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\validator;
 
 class PostController extends Controller
@@ -276,6 +276,43 @@ class PostController extends Controller
         // dd($updateData);
 
         $id=$request->postId;      
+        
+        // dd($request->file('postImage'));
+          // image update function       
+        if($request->hasFile('postImage')){
+             
+            // delete current image
+                // dd($request->all());
+                //take old image
+                $oldImageName=Post::select('image')->where('id',$request->postId)->first()->toArray();
+                // convert to array format
+                $oldImageName=$oldImageName['image'];
+                // dd($oldImageName);
+                
+                // if condition null or not null 
+                if($oldImageName != null){
+                    // to delete old image.
+                Storage::delete('public/'.$oldImageName);
+                }
+
+                // delete current image               
+
+
+
+            // update new image
+           $fileName= uniqid().$request->file('postImage')->getClientOriginalName();
+            // write for to do the save function of images
+            $request->file('postImage')->storeAs('public',$fileName);
+            $updateData['image']=$fileName;
+             // to show the success step.
+            // dd("store success");
+
+        }
+
+        // image update function
+
+
+
 
         // real update function
 
