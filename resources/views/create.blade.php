@@ -84,7 +84,7 @@
                    
           <div class="text-group mb-3"> 
  					 <label for="">Image</label>
-                         <input type="file" name="postImage" id="" class="form-control @error('postImage') is-invalid @enderror" value="{{old('postImage')}}">	
+                         <input type="file" name="postImage" id="" class="form-control  @error('postImage') is-invalid @enderror" value="{{old('postImage')}}">	
                          @error('postImage')
                          <div class="invalid-feedback">
                            {{ $message }} 
